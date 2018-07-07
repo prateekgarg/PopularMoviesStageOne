@@ -10,11 +10,11 @@
 
     <GridView
         android:id="@+id/pop_movies_gridview"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:columnWidth="@dimen/grid_column_width"
-        android:numColumns="auto_fit"
+        android:gravity="center_horizontal"
+        android:numColumns="auto_fit" />
         />
 
     <ProgressBar

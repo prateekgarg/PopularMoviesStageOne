@@ -15,10 +15,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        applicationVariants.all{
+            variant -> variant.buildConfigField "String","API_KEY","\"{API_KEY}\""
+        }
     }
 }
 
-repositories{
+repositories {
     mavenCentral()
 }
 

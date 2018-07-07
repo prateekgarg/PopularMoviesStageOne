@@ -1,6 +1,8 @@
 package garg.prateek.popularmoviesstageone.utilities;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable{
     private int id;
     private  float averageVotes;
     private int voteCounts;

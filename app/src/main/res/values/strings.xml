@@ -2,4 +2,7 @@
     <string name="app_name">PopularMoviesStageOne</string>
     <string name="movie_poster">Movie Poster</string>
     <string name="refresh_menu">Refresh</string>
+    <string name="popular_movies">Sort by popularity</string>
+    <string name="top_rated_movies">Sort by ratings</string>
+    <string name="API_KEY">3144056aa02c04c769ac41f8e8c203bc</string>
 </resources>

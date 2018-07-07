@@ -1,5 +1,8 @@
 package garg.prateek.popularmoviesstageone.utilities;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -36,11 +39,11 @@ public class NetworkUtils{
             } else {
                 return null;
             }
-        }
-        catch (IOException e){
+        } catch (MalformedURLException e){
             Log.e(TAG, "fetchApi: ", e);
-        }
-        finally {
+        } catch (IOException e){
+            Log.e(TAG, "fetchApi: ", e);
+        } finally {
             assert urlConnection != null;
             urlConnection.disconnect();
         }
@@ -51,10 +54,10 @@ public class NetworkUtils{
     private static void parseJson(String result, ArrayList<Movie> movies){
 
         try {
-            JSONObject jsonObject = new JSONObject(result);
-            JSONArray resultsArray = jsonObject.getJSONArray("results");
+            JSONObject object = new JSONObject(result);
+            JSONArray resultsArray = object.getJSONArray("results");
             for (int i = 0; i < resultsArray.length(); ++i){
-                JSONObject object = resultsArray.getJSONObject(i);
+                JSONObject jsonObject = resultsArray.getJSONObject(i);
                 Movie movie = new Movie();
                 movie.setId(jsonObject.getInt("id"));
                 movie.setVoteCounts(jsonObject.getInt("vote_count"));
@@ -72,6 +75,16 @@ public class NetworkUtils{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean getNetworkState(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()){
+            return true;
+        }
+        return false;
     }
 
 }
