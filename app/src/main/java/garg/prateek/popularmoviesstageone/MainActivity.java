@@ -90,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
             refreshList(mPopularMoviesList);
         } else if (menuItem == R.id.sort_top_rated_movies) {
             refreshList(mTopRatedMovieList);
+        } else if (menuItem == R.id.about) {
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

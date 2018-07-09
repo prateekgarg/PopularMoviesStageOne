@@ -11,4 +11,6 @@
     <string name="original_poster">Original poster</string>
     <string name="movie_thumbnail">Movie thumbnail</string>
     <string name="release_date">Release Date:</string>
+    <string name="about">About</string>
+    <string name="tmdb_text">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
 </resources>
