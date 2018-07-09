@@ -5,4 +5,10 @@
     <string name="popular_movies">Sort by popularity</string>
     <string name="top_rated_movies">Sort by ratings</string>
     <string name="API_KEY">3144056aa02c04c769ac41f8e8c203bc</string>
+    <string name="original_title">Original title:</string>
+    <string name="user_rating">User rating:</string>
+    <string name="synopsis">Synopsis:</string>
+    <string name="original_poster">Original poster</string>
+    <string name="movie_thumbnail">Movie thumbnail</string>
+    <string name="release_date">Release Date:</string>
 </resources>

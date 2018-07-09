@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,10 +11,8 @@
         android:id="@+id/pop_movies_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="@dimen/grid_column_width"
         android:gravity="center_horizontal"
         android:numColumns="auto_fit" />
-        />
 
     <ProgressBar
         android:id="@+id/movieLoadProgressBar"
@@ -30,5 +27,16 @@
         app:layout_constraintEnd_toEndOf="@+id/pop_movies_gridview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/pop_movies_gridview" />
+
+    <Button
+        android:id="@+id/refresh_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="refreshApp"
+        app:layout_constraintBottom_toBottomOf="@+id/pop_movies_gridview"
+        app:layout_constraintEnd_toEndOf="@+id/pop_movies_gridview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pop_movies_gridview"
+        android:text="Refresh" />
 
 </android.support.constraint.ConstraintLayout>

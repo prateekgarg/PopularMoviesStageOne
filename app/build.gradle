@@ -16,7 +16,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         applicationVariants.all{
-            variant -> variant.buildConfigField "String","API_KEY","\"{API_KEY}\""
+            variant -> variant.buildConfigField "String","API_KEY","\"{YOUR_API_KEY}\""
         }
     }
 }

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar mProgressBar;
     @BindView(R.id.pop_movies_gridview)
     GridView mGridView;
+    @BindView(R.id.refresh_button)
+    Button mRefreshButton;
 
     ArrayList<Movie> mPopularMoviesList;
     ArrayList<Movie> mTopRatedMovieList;
@@ -47,20 +50,30 @@ public class MainActivity extends AppCompatActivity {
 
         //Hide the progress bar unless movies are loading up in the background
         mProgressBar.setVisibility(View.INVISIBLE);
-
-        new FetchMovies().execute();
-
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Movie movie = (Movie) parent.getAdapter().getItem(position);
-                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra("movie_selected", movie);
-                startActivity(intent);
-            }
-        });
+        mRefreshButton.setVisibility(View.GONE);
+        startApp();
     }
 
+    private void startApp() {
+        boolean internet_status = NetworkUtils.getNetworkState(MainActivity.this);
+        if (internet_status) {
+            mRefreshButton.setVisibility(View.GONE);
+            new FetchMovies().execute();
+
+            mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Movie movie = (Movie) parent.getAdapter().getItem(position);
+                    Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                    intent.putExtra("movie_selected", movie);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            mRefreshButton.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "No Internet connection detected", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
     @Override
@@ -71,17 +84,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int menuitem = item.getItemId();
-        if (menuitem == R.id.action_refresh){
-//            Context context = MainActivity.this;
-//            String message = "Refresh clicked";
-//            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        int menuItem = item.getItemId();
+
+        if (menuItem == R.id.sort_popular_movies) {
             refreshList(mPopularMoviesList);
-        }
-        else if (menuitem == R.id.sort_popular_movies){
-            refreshList(mPopularMoviesList);
-        }
-        else if (menuitem == R.id.sort_top_rated_movies){
+        } else if (menuItem == R.id.sort_top_rated_movies) {
             refreshList(mTopRatedMovieList);
         }
         return super.onOptionsItemSelected(item);
@@ -91,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
         MovieAdapter movieAdapter = new MovieAdapter(MainActivity.this, movies);
         mGridView.invalidateViews();
         mGridView.setAdapter(movieAdapter);
+    }
+
+    public void refreshApp(View view) {
+        startApp();
     }
 
     public class FetchMovies extends AsyncTask<Void, Void, Void> {
@@ -107,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             mPopularMoviesList = new ArrayList<>();
             mTopRatedMovieList = new ArrayList<>();
 
-            if (NetworkUtils.getNetworkState(MainActivity.this)){
+            if (NetworkUtils.getNetworkState(MainActivity.this)) {
 
                 try {
                     Uri uri = Uri.parse(BASE_URL)
@@ -127,8 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-            }
-            else{
+            } else {
                 Toast.makeText(MainActivity.this,
                         "No internet connection detected",
                         Toast.LENGTH_LONG).show();
